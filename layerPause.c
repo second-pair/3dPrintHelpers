@@ -45,7 +45,6 @@
 #define BUF_SIZE UINT8_MAX
 //  My generategd G-Code had CR+LF, so I guess I'd better respect it...
 #define INSERT_TEXT "\n\n;  Perform magnet insert procedure.\nG91  ;  Relative mode.\nG1 Y30 Z10 E-12  ;  Move away.\nM0 Insert Magnet  ;  Wait for LCD button press.\nG1 Y-30 Z-10 E12  ;  Move back.\nG90  ;  Absolute mode.\n\n"
-#define INSERT_TEXT_LENGTH 223
 
 //  Prototype Functions
 int main (void);
@@ -106,8 +105,8 @@ int main (void)
 
 	//  Get input from the user - which file to edit and before which layer to pause at.
 	printf ("Please tell me which file you would like to modify:  ");
-	char fileName [BUF_SIZE];
-	fgets (fileName, BUF_SIZE, stdin);
+	char fileName [BUF_SIZE - 4];
+	fgets (fileName, BUF_SIZE - 4, stdin);
 	_NULL_RETURN (fileName, 1);
 	_LOG (2, "Stripping quote characters from the file name.\n");
 	for (uint8_t i = 0; i < BUF_SIZE; i ++)
